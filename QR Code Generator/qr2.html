@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator UI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        padding: 20px;
+        background: #fff;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .left-panel {
+        flex: 1;
+        min-width: 280px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .left-panel input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        border: 1px solid #555;
+      }
+
+      .left-panel button {
+        padding: 10px 20px;
+        background: #ddd;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+
+      .right-panel {
+        flex: 1;
+        min-width: 280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .qr-box {
+        width: 300px;
+        height: 300px;
+        background: limegreen;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .button-row button {
+        padding: 10px 20px;
+        background: #ddd;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 5px;
+      }
+
+      .list-container {
+        margin-top: 30px;
+        border: 1px solid #aaa;
+        padding: 15px;
+        background: #f5f5f5;
+      }
+
+      .qr-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #000;
+        padding: 10px;
+        margin-bottom: 15px;
+        background: #fff;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .qr-item span {
+        flex: 2;
+        font-size: 14px;
+      }
+
+      .thumbnail {
+        width: 60px;
+        height: 60px;
+        background: #777;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      .qr-item input[type="text"] {
+        padding: 6px;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .qr-item button {
+        padding: 8px 16px;
+        background: #ddd;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .qr-item {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>QR CODE GENERATOR</h1>
+
+    <div class="container">
+      <div class="left-panel">
+        <input type="text" placeholder="Enter Your URL Here……" />
+        <button>Generate</button>
+      </div>
+
+      <div class="right-panel">
+        <div class="qr-box">QR CODE</div>
+        <div class="button-row">
+          <button>Save</button>
+          <button>Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-container">
+      <div class="qr-item">
+        <span>URL LINK……………………………</span>
+        <div class="thumbnail">Thumbnail</div>
+        <input type="text" placeholder="Enter QR Name" />
+        <button>Save</button>
+      </div>
+
+      <div class="qr-item">
+        <span>URL LINK……………………………</span>
+        <div class="thumbnail">Thumbnail</div>
+        <input type="text" placeholder="Enter QR Name" />
+        <button>Save</button>
+      </div>
+
+      <div class="qr-item">
+        <span>URL LINK……………………………</span>
+        <div class="thumbnail">Thumbnail</div>
+        <input type="text" placeholder="Enter QR Name" />
+        <button>Save</button>
+      </div>
+    </div>
+    <!-- is script ko head ya body ke end me add karna hoga -->
+    <script src="qrcode.js"></script>
+
+    <script>
+      // Generate button ka reference lo
+      const generateBtn = document.querySelector(".left-panel button");
+      const urlInput = document.querySelector(".left-panel input");
+      const qrBox = document.querySelector(".qr-box");
+
+      generateBtn.addEventListener("click", () => {
+        const url = urlInput.value.trim();
+
+        if (!url) {
+          alert("Please enter a URL");
+          return;
+        }
+
+        // Purana QR clear karna
+        qrBox.innerHTML = "";
+
+        // QR generate karna
+        new QRCode(qrBox, {
+          text: url,
+          width: 300,
+          height: 300,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+      });
+    </script>
+  </body>
+</html>
